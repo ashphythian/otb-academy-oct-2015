@@ -13,6 +13,9 @@
 # and
 #   about_triangle_project_2.rb
 #
+
+pending 'finish later'
+
 def triangle(a, b, c)
   if (a==b && b==c)
     :equilateral
