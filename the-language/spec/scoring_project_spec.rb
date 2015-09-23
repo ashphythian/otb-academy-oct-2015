@@ -28,8 +28,33 @@
 # Your goal is to write the score method.
 
 def score(dice)
-  # You need to write this method
-end
+  result=0
+
+  scores = []
+  scores[1] = [0, 100, 200, 1000, 1100, 1200]
+  scores[2] = [0, 0, 0, 200, 200, 200]
+  scores[3] = [0, 0, 0, 300, 300, 300]
+  scores[4] = [0, 0, 0, 400, 400, 400]
+  scores[5] = [0, 50, 100, 500, 550, 600]
+  scores[6] = [0, 0, 0, 600, 600, 600]
+
+  for x in 1..6
+    result += scores[x].fetch(dice.count(x))
+  end
+
+
+  # if dice.count(1) == 3
+  #   result += 1000
+  # elsif dice.detect{|x| dice.count(x) == 3}
+  #   result+=200
+  # else
+  #   dice.each do |x|
+  #     result += 100 if x == 1
+  #     result += 50 if x == 5
+  #   end
+  # end
+ result 
+end 
 
 RSpec.describe "scorign a game of greed" do
   it "scores an empty list as 0" do
