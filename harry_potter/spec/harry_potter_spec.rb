@@ -28,7 +28,7 @@ class HarryPotterBooks
 		  	@books.map!{|x| x-1}
   		end
 
-  		# discounts discounting the 5 books
+  		# discounts disregarding the 5 book deal
   		until @books2.empty? do
 
 			@books2.delete(0)
@@ -85,6 +85,22 @@ RSpec.describe "Harry Potter book discount" do
 
 	it "Costs £51.20 to buy the example quantity of books" do
     	expect(HarryPotterBooks.new([2,2,2,1,1]).best_deal).to eq(51.20)
+	end
+
+	it "Costs £30 to buy one of each" do
+    	expect(HarryPotterBooks.new([1,1,1,1,1]).best_deal).to eq(30)
+	end
+
+	it "Costs £90 to buy three of each" do
+    	expect(HarryPotterBooks.new([3,3,3,3,3]).best_deal).to eq(90)
+	end
+
+	it "Costs £113.60 for a random array of books" do
+    	expect(HarryPotterBooks.new([5,5,4,2,1]).best_deal).to be_within(0.05).of(113.6)
+	end
+
+	it "Costs £55.60 for a random array of books" do
+    	expect(HarryPotterBooks.new([2,2,2,2,1]).best_deal).to be_within(0.05).of(55.6)
 	end
 
 end
