@@ -3,6 +3,11 @@ class HarryPotterBooks
 	def initialize(books)
 		@books = books
 		@books2 = @books.dup
+		@bookprice = 8
+		@discount_5 = 0.75
+		@discount_4 = 0.8
+		@discount_3 = 0.9
+		@discount_2 = 0.95
 	end
 
 	def best_deal 
@@ -14,18 +19,19 @@ class HarryPotterBooks
 
 			@books.delete(0)
 			discount = @books.length
+
 		  	if discount == 5
-		    	price += 30
+		    	price += 5 * @bookprice * @discount_5
 		  	elsif discount == 4
-		    	price += 25.60
+		    	price += 4 * @bookprice * @discount_4
 		  	elsif discount == 3
-		    	price += 21.60
+		    	price += 3 * @bookprice * @discount_3
 		  	elsif discount == 2
-		    	price += 15.20
+		    	price += 2 * @bookprice * @discount_2
 		  	elsif discount == 1
-		    	price += 8
+		    	price += @bookprice
 		  	end
-		  	@books.map!{|x| x-1}
+		  	@books.map!{ |x| x - 1 }
   		end
 
   		# discounts disregarding the 5 book deal
@@ -33,33 +39,28 @@ class HarryPotterBooks
 
 			@books2.delete(0)
 			discount2 = @books2.length
+
 		  	if discount2 == 5
-		    	price2 += 25.60
-		    	@books2[@books2.index(@books2.min)]+=1
+		    	price2 += 4 * @bookprice * @discount_4 # ignoring the 5
+		    	@books2[@books2.index(@books2.min)]+=1 	# preemptively readding a book
 		  	elsif discount2 == 4
-		    	price2 += 25.60
+		    	price2 += 4 * @bookprice * @discount_4
 		  	elsif discount2 == 3
-		    	price2 += 21.60
+		    	price2 += 3 * @bookprice * @discount_3
 		  	elsif discount2 == 2
-		    	price2 += 15.20
+		    	price2 += 2 * @bookprice * @discount_2
 		  	elsif discount2 == 1
-		    	price2 += 8
+		    	price2 += @bookprice
 		  	end
-		  	@books2.map!{|x| x-1}
+		  	@books2.map!{ |x| x -1 }
   		end
-
-
+  		# chooses optimal deal
   		best_deal = [price,price2].min
-
   		best_deal
-
 	end
-
 end
 
-
-
-
+# RSpec tests
 
 RSpec.describe "Harry Potter book discount" do
 	
