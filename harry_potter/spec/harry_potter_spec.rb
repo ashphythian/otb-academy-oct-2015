@@ -41,23 +41,23 @@ end
 RSpec.describe "Harry Potter book discount" do
 	
 	it "Costs nothing to buy no books" do
-		expect(HarryPotterBooks.new([0, 0, 0, 0, 0]).price).to eq(0)
+		expect(HarryPotterBooks.new([]).price).to eq(0)
 	end
 
 	it "Costs £8 to buy one book" do
-		expect(HarryPotterBooks.new([1, 0 ,0 ,0 ,0]).price).to eq(8)
+		expect(HarryPotterBooks.new([1]).price).to eq(8)
 	end
 
 	it "Costs £16 to buy two of the same book" do
-		expect(HarryPotterBooks.new([2, 0 ,0 ,0 ,0]).price).to eq(16)
+		expect(HarryPotterBooks.new([2]).price).to eq(16)
 	end
 
 	it "Costs £15.20 to buy two different books" do
-    	expect(HarryPotterBooks.new([1, 0 ,0 ,1 ,0]).price).to eq(15.20)
+    	expect(HarryPotterBooks.new([1, 1]).price).to eq(15.20)
 	end
 
-	it "Costs £44.80 to buy a selection of books" do
-    	expect(HarryPotterBooks.new([3, 2, 1, 0, 0]).price).to eq(44.80)
+	it "Costs £44.80 to buy a selection of books books" do
+    	expect(HarryPotterBooks.new([3, 2, 1]).price).to eq(44.80)
 	end
 
 
