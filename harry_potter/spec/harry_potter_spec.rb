@@ -60,5 +60,8 @@ RSpec.describe "Harry Potter book discount" do
     	expect(HarryPotterBooks.new([3, 2, 1]).price).to eq(44.80)
 	end
 
+	it "Costs £51.20 to buy the example quantity of books" do
+    	expect(HarryPotterBooks.new([2,2,2,1,1]).price).to eq(51.20)
+	end
 
 end
