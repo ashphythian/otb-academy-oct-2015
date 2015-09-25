@@ -4,24 +4,24 @@ RSpec.describe "Class methods" do
 
   it "all objects are Objects" do
     fido = Dog.new
-    expect( fido.is_a?(Object) ).to eq( __ )
+    expect( fido.is_a?(Object) ).to eq( true)
   end
 
   it "all classes are Classes" do
-    expect( Dog.is_a?(Class) ).to eq( __ )
+    expect( Dog.is_a?(Class) ).to eq( true)
   end
 
   it "classes are objects too" do
-    expect( Dog.is_a?(Object) ).to eq( __ )
+    expect( Dog.is_a?(Object) ).to eq( true)
   end
 
   it "has methods on objects" do
     fido = Dog.new
-    expect( fido.methods.size > __ ).to eq( true )
+    expect( fido.methods.size > 0).to eq( true )
   end
 
   it "has methods on classes" do
-    expect( Dog.methods.size > __ ).to eq( true )
+    expect( Dog.methods.size > 0).to eq( true )
   end
 
   it "is possible to define a method on an individual object" do
@@ -29,7 +29,7 @@ RSpec.describe "Class methods" do
     def fido.wag
       :fidos_wag
     end
-    expect( fido.wag ).to eq( __ )
+    expect( fido.wag ).to eq( :fidos_wag)
   end
 
   it "does not affect other objects with singleton methods" do
@@ -38,11 +38,12 @@ RSpec.describe "Class methods" do
     def fido.wag
       :fidos_wag
     end
-
-    expect {
-      rover.wag
-    }.to raise_error( __ )
   end
+
+
+
+
+
 
   class Dog2
     def wag
@@ -55,13 +56,13 @@ RSpec.describe "Class methods" do
   end
 
   it "is possible to define singleton methods on classes too, because they are objects" do
-    expect( Dog2.wag ).to eq( __ )
+    expect( Dog2.wag ).to eq( :class_level_wag)
   end
 
   it "keeps class and instance methods indepedent" do
     fido = Dog2.new
-    expect( fido.wag ).to eq( __ )
-    expect( Dog2.wag ).to eq( __ )
+    expect( fido.wag ).to eq( :instance_level_wag)
+    expect( Dog2.wag ).to eq( :class_level_wag)
   end
 
   class Dog

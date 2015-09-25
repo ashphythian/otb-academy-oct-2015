@@ -41,8 +41,11 @@ class HarryPotterBooks
 			discount2 = @books2.length
 
 		  	if discount2 == 5
-		    	price2 += 4 * @bookprice * @discount_4 # ignoring the 5
-		    	@books2[@books2.index(@books2.min)]+=1 	# preemptively readding a book
+		  		if @books2.uniq.length > 1 						# if there are different values, the 4 discount is optimal
+			    	price2 += 4 * @bookprice * @discount_4 		# ignoring the 5
+			    	@books2[@books2.index(@books2.min)]+=1 		# preemptively readding a book
+			    else price2 += 5 * @bookprice * @discount_5		# if all values are the same, it is optimal to use the 5 discount
+			    end
 		  	elsif discount2 == 4
 		    	price2 += 4 * @bookprice * @discount_4
 		  	elsif discount2 == 3
@@ -88,6 +91,10 @@ RSpec.describe "Harry Potter book discount" do
     	expect(HarryPotterBooks.new([2,2,2,1,1]).best_deal).to eq(51.20)
 	end
 
+	it "Costs £51.20 for a the previous quantity in a different order" do
+    	expect(HarryPotterBooks.new([1,1,2,2,2]).best_deal).to eq(51.20)
+	end
+
 	it "Costs £30 to buy one of each" do
     	expect(HarryPotterBooks.new([1,1,1,1,1]).best_deal).to eq(30)
 	end
@@ -97,11 +104,16 @@ RSpec.describe "Harry Potter book discount" do
 	end
 
 	it "Costs £113.60 for a random array of books" do
-    	expect(HarryPotterBooks.new([5,5,4,2,1]).best_deal).to be_within(0.05).of(113.6)
+    	expect(HarryPotterBooks.new([5,5,4,2,1]).best_deal).to be_within(0.005).of(113.6)
 	end
 
 	it "Costs £55.60 for a random array of books" do
-    	expect(HarryPotterBooks.new([2,2,2,2,1]).best_deal).to be_within(0.05).of(55.6)
+    	expect(HarryPotterBooks.new([2,2,2,2,1]).best_deal).to be_within(0.005).of(55.6)
 	end
+
+	it "Costs £141.20 for an example off the internet" do
+    	expect(HarryPotterBooks.new([5, 5, 4, 5, 4]).best_deal).to eq(141.2)
+	end
+
 
 end
