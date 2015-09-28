@@ -1,4 +1,97 @@
-require 'bottles'
+#require 'bottles'
+
+class Bottles
+
+  def generate(num)
+    begin
+      Object.const_get("::#{self.class}::Bottle#{num}").new(num)
+    rescue NameError
+      BottleNumber.new(num)
+    end
+ #   { 1 => Bottle1, 0 => Bottle0, 6 => Bottle6 }.fetch(num, BottleNumber).new(num)
+  end
+
+  def verse(num)
+
+    bottle = generate(num)
+    next_bottle = generate(bottle.decrement)
+
+      "#{bottle.no_more.capitalize} #{bottle.bottles_or_bottle} of beer on the wall, #{bottle.no_more} #{bottle.bottles_or_bottle} of beer.\n" +
+        "#{bottle.action}, #{next_bottle.no_more} #{next_bottle.bottles_or_bottle} of beer on the wall.\n"
+  end
+
+  def verses(num, num2)
+    result = ""
+    num.downto(num2).each do |v|
+      result += verse(v) + "\n"
+    end
+    result
+  end
+
+  def sing
+    verses(99,0)
+  end
+
+  class BottleNumber
+
+    attr_reader :num
+
+    def initialize(num)
+      @num = num
+    end
+
+    def no_more
+      "#{num}"
+    end
+    def action
+      "Take #{it_or_one} down and pass it around"
+    end
+    def bottles_or_bottle
+      "bottles"
+    end
+    def it_or_one
+      "one"
+    end
+    def decrement
+      num - 1
+    end
+    def sixpack
+    end
+  end
+
+  class Bottle1 < BottleNumber
+   def bottles_or_bottle
+      "bottle"
+    end
+    def it_or_one
+      "it"
+    end
+  end
+
+  class Bottle0 < BottleNumber
+    def no_more
+     "no more"
+    end
+    def action
+      "Go to the store and buy some more"
+    end
+    def decrement
+      99
+    end
+  end
+
+  class Bottle6 < BottleNumber
+    def no_more
+      "one"
+    end
+
+    def bottles_or_bottle
+      "six-pack"
+    end
+  end
+end
+
+
 
 describe "singing 99 bottles of beer" do
 
@@ -10,37 +103,32 @@ describe "singing 99 bottles of beer" do
   end
 
   it "can sing another typical verse" do
-    skip
     expected = "3 bottles of beer on the wall, 3 bottles of beer.\nTake one down and pass it around, 2 bottles of beer on the wall.\n"
     expect( song.verse(3) ).to eq( expected )
   end
 
   it "can sing about 1 bottle" do
-    skip
     expected = "1 bottle of beer on the wall, 1 bottle of beer.\nTake it down and pass it around, no more bottles of beer on the wall.\n"
     expect( song.verse(1) ).to eq( expected )
   end
 
   it "can sing about 2 bottles" do
-    skip
     expected = "2 bottles of beer on the wall, 2 bottles of beer.\nTake one down and pass it around, 1 bottle of beer on the wall.\n"
     expect( song.verse(2) ).to eq( expected )
   end
 
   it "can sing about no more bottles" do
-    skip
     expected = "No more bottles of beer on the wall, no more bottles of beer.\nGo to the store and buy some more, 99 bottles of beer on the wall.\n"
     expect( song.verse(0) ).to eq( expected )
   end
 
   it "can string a few verses together" do
-    skip
-    expected = "8 bottles of beer on the wall, 8 bottles of beer.\nTake one down and pass it around, 7 bottles of beer on the wall.\n\n7 bottles of beer on the wall, 7 bottles of beer.\nTake one down and pass it around, 6 bottles of beer on the wall.\n\n6 bottles of beer on the wall, 6 bottles of beer.\nTake one down and pass it around, 5 bottles of beer on the wall.\n\n"
+    expected = "8 bottles of beer on the wall, 8 bottles of beer.\nTake one down and pass it around, 7 bottles of beer on the wall.\n\n7 bottles of beer on the wall, 7 bottles of beer.\nTake one down and pass it around, one six-pack of beer on the wall.\n\nOne six-pack of beer on the wall, one six-pack of beer.\nTake one down and pass it around, 5 bottles of beer on the wall.\n\n"
     expect( song.verses(8, 6) ).to eq( expected )
   end
 
-  it "can sing the whole song" do
-    skip
-    expect( song.sing ).to eq( song.verses(99, 0) )
+  it "can use one six-pack instead of 6 bottles of beer" do
+    expected = "7 bottles of beer on the wall, 7 bottles of beer.\nTake one down and pass it around, one six-pack of beer on the wall.\n\nOne six-pack of beer on the wall, one six-pack of beer.\nTake one down and pass it around, 5 bottles of beer on the wall.\n\n"
+    expect( song.verses(7,6) ).to eq( expected )
   end
 end
