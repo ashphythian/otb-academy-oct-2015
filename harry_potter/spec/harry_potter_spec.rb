@@ -12,16 +12,19 @@ class HarryPotterBooks
 
 	def best_deal 
  
-   		price = price2 = 0
+   		price = 0
 
-   		# discounts including for 5 books
 		until @books.empty? do
 
 			@books.delete(0)
 			discount = @books.length
 
 		  	if discount == 5
-		    	price += 5 * @bookprice * @discount_5
+		  		if @books.uniq.length > 1 						# if there are different values, the 4 discount is optimal
+			    	price += 4 * @bookprice * @discount_4 		# ignoring the 5
+			    	@books[@books.index(@books.min)]+=1 		# preemptively readding a book
+			    else price += 5 * @bookprice * @discount_5		# if all values are the same, it is optimal to use the 5 discount
+			    end
 		  	elsif discount == 4
 		    	price += 4 * @bookprice * @discount_4
 		  	elsif discount == 3
@@ -34,31 +37,8 @@ class HarryPotterBooks
 		  	@books.map!{ |x| x - 1 }
   		end
 
-  		# discounts disregarding the 5 book deal
-  		until @books2.empty? do
-
-			@books2.delete(0)
-			discount2 = @books2.length
-
-		  	if discount2 == 5
-		  		if @books2.uniq.length > 1 						# if there are different values, the 4 discount is optimal
-			    	price2 += 4 * @bookprice * @discount_4 		# ignoring the 5
-			    	@books2[@books2.index(@books2.min)]+=1 		# preemptively readding a book
-			    else price2 += 5 * @bookprice * @discount_5		# if all values are the same, it is optimal to use the 5 discount
-			    end
-		  	elsif discount2 == 4
-		    	price2 += 4 * @bookprice * @discount_4
-		  	elsif discount2 == 3
-		    	price2 += 3 * @bookprice * @discount_3
-		  	elsif discount2 == 2
-		    	price2 += 2 * @bookprice * @discount_2
-		  	elsif discount2 == 1
-		    	price2 += @bookprice
-		  	end
-		  	@books2.map!{ |x| x -1 }
-  		end
   		# chooses optimal deal
-  		best_deal = [price,price2].min
+  		best_deal = price
   		best_deal
 	end
 end

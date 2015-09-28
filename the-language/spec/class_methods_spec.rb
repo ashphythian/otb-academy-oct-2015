@@ -76,8 +76,8 @@ RSpec.describe "Class methods" do
   it "does not share instance variables between classes and instances" do
     fido = Dog.new
     fido.name = "Fido"
-    expect( fido.name ).to eq( __ )
-    expect( Dog.name ).to eq( __ )
+    expect( fido.name ).to eq( "Fido")
+    expect( Dog.name ).to eq( nil)
   end
 
   class Dog
@@ -87,7 +87,7 @@ RSpec.describe "Class methods" do
   end
 
   it "is possible to define a class method inside the class" do
-    expect( Dog.a_class_method ).to eq( __ )
+    expect( Dog.a_class_method ).to eq( :dogs_class_method)
   end
 
   LastExpressionInClassStatement = class Dog
@@ -95,7 +95,7 @@ RSpec.describe "Class methods" do
                                    end
 
   it "returns the last expression inside a class statement" do
-    expect( LastExpressionInClassStatement ).to eq( __ )
+    expect( LastExpressionInClassStatement ).to eq( 21)
   end
 
   SelfInsideOfClassStatement = class Dog
@@ -103,7 +103,7 @@ RSpec.describe "Class methods" do
                                end
 
   it "uses self to refer to the class, not an instance inside the class statement" do
-    expect( Dog == SelfInsideOfClassStatement ).to eq( __ )
+    expect( Dog == SelfInsideOfClassStatement ).to eq( true)
   end
 
   class Dog
@@ -113,7 +113,7 @@ RSpec.describe "Class methods" do
   end
 
   it "is possible to use self to define a class method" do
-    expect( Dog.class_method2 ).to eq( __ )
+    expect( Dog.class_method2 ).to eq( :another_way_to_write_class_methods)
   end
 
   class Dog
@@ -125,7 +125,7 @@ RSpec.describe "Class methods" do
   end
 
   it "has a third way to define a class method" do
-    expect( Dog.another_class_method ).to eq( __ )
+    expect( Dog.another_class_method ).to eq( :still_another_way)
   end
 
   # THINK ABOUT IT:
@@ -153,7 +153,7 @@ RSpec.describe "Class methods" do
       self.class.another_class_method
     end
 
-    expect( fido.instance_method ).to eq( __ )
+    expect( fido.instance_method ).to eq( :still_another_way)
   end
 
 end
