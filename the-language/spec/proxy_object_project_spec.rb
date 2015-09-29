@@ -11,11 +11,15 @@
 
 class Proxy
   def initialize(target_object)
-    @object = target_object
-
- 
-
-
+    @object = target_object 
+  end
+  class Television
+  def channel
+    10
+  end
+  def power
+    true
+  end 
   end
 end
 

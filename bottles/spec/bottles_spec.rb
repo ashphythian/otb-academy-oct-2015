@@ -82,7 +82,7 @@ class Bottles
 
   class Bottle6 < BottleNumber
     def no_more
-      "one"
+      (num / 6).to_s
     end
 
     def bottles_or_bottle
@@ -123,12 +123,22 @@ describe "singing 99 bottles of beer" do
   end
 
   it "can string a few verses together" do
-    expected = "8 bottles of beer on the wall, 8 bottles of beer.\nTake one down and pass it around, 7 bottles of beer on the wall.\n\n7 bottles of beer on the wall, 7 bottles of beer.\nTake one down and pass it around, one six-pack of beer on the wall.\n\nOne six-pack of beer on the wall, one six-pack of beer.\nTake one down and pass it around, 5 bottles of beer on the wall.\n\n"
+    expected = "8 bottles of beer on the wall, 8 bottles of beer.\nTake one down and pass it around, 7 bottles of beer on the wall.\n\n7 bottles of beer on the wall, 7 bottles of beer.\nTake one down and pass it around, 1 six-pack of beer on the wall.\n\n1 six-pack of beer on the wall, 1 six-pack of beer.\nTake one down and pass it around, 5 bottles of beer on the wall.\n\n"
     expect( song.verses(8, 6) ).to eq( expected )
   end
 
-  it "can use one six-pack instead of 6 bottles of beer" do
-    expected = "7 bottles of beer on the wall, 7 bottles of beer.\nTake one down and pass it around, one six-pack of beer on the wall.\n\nOne six-pack of beer on the wall, one six-pack of beer.\nTake one down and pass it around, 5 bottles of beer on the wall.\n\n"
+  it "can use 1 six-pack instead of 6 bottles of beer" do
+    expected = "7 bottles of beer on the wall, 7 bottles of beer.\nTake one down and pass it around, 1 six-pack of beer on the wall.\n\n1 six-pack of beer on the wall, 1 six-pack of beer.\nTake one down and pass it around, 5 bottles of beer on the wall.\n\n"
     expect( song.verses(7,6) ).to eq( expected )
+  end
+
+  it "can use 2 six-packs instead of 12 bottles of beer" do
+    expected = "2 six-packs of beer on the wall, 2 six-packs of beer.\nTake one down and pass it around, 11 bottles of beer on the wall.\n\n"
+    expect( song.verse(12) ).to eq( expected )
+  end
+
+  it "can use 1 crate instead of 24 bottles of beer" do
+    expected = "1 crate of beer on the wall, 1 crate of beer.\nTake one down and pass it around, 23 bottles of beer on the wall.\n\n"
+    expect( song.verse(24) ).to eq( expected )
   end
 end

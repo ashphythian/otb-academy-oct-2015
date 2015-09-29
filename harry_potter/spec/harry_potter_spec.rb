@@ -10,7 +10,7 @@ class HarryPotterBooks
 		@discount_2 = 0.95
 	end
 
-	def best_deal 
+	def price 
  
    		price = 0
 
@@ -37,9 +37,8 @@ class HarryPotterBooks
 		  	@books.map!{ |x| x - 1 }
   		end
 
-  		# chooses optimal deal
-  		best_deal = price
-  		best_deal
+  		price
+  		
 	end
 end
 
@@ -48,51 +47,51 @@ end
 RSpec.describe "Harry Potter book discount" do
 	
 	it "Costs nothing to buy no books" do
-		expect(HarryPotterBooks.new([]).best_deal).to eq(0)
+		expect(HarryPotterBooks.new([]).price).to eq(0)
 	end
 
 	it "Costs £8 to buy one book" do
-		expect(HarryPotterBooks.new([1]).best_deal).to eq(8)
+		expect(HarryPotterBooks.new([1]).price).to eq(8)
 	end
 
 	it "Costs £16 to buy two of the same book" do
-		expect(HarryPotterBooks.new([2]).best_deal).to eq(16)
+		expect(HarryPotterBooks.new([2]).price).to eq(16)
 	end
 
 	it "Costs £15.20 to buy two different books" do
-    	expect(HarryPotterBooks.new([1, 1]).best_deal).to eq(15.20)
+    	expect(HarryPotterBooks.new([1, 1]).price).to eq(15.20)
 	end
 
 	it "Costs £44.80 to buy a selection of books books" do
-    	expect(HarryPotterBooks.new([3, 2, 1]).best_deal).to eq(44.80)
+    	expect(HarryPotterBooks.new([3, 2, 1]).price).to eq(44.80)
 	end
 
 	it "Costs £51.20 to buy the example quantity of books" do
-    	expect(HarryPotterBooks.new([2,2,2,1,1]).best_deal).to eq(51.20)
+    	expect(HarryPotterBooks.new([2,2,2,1,1]).price).to eq(51.20)
 	end
 
 	it "Costs £51.20 for a the previous quantity in a different order" do
-    	expect(HarryPotterBooks.new([1,1,2,2,2]).best_deal).to eq(51.20)
+    	expect(HarryPotterBooks.new([1,1,2,2,2]).price).to eq(51.20)
 	end
 
 	it "Costs £30 to buy one of each" do
-    	expect(HarryPotterBooks.new([1,1,1,1,1]).best_deal).to eq(30)
+    	expect(HarryPotterBooks.new([1,1,1,1,1]).price).to eq(30)
 	end
 
 	it "Costs £90 to buy three of each" do
-    	expect(HarryPotterBooks.new([3,3,3,3,3]).best_deal).to eq(90)
+    	expect(HarryPotterBooks.new([3,3,3,3,3]).price).to eq(90)
 	end
 
 	it "Costs £113.60 for a random array of books" do
-    	expect(HarryPotterBooks.new([5,5,4,2,1]).best_deal).to be_within(0.005).of(113.6)
+    	expect(HarryPotterBooks.new([5,5,4,2,1]).price).to be_within(0.005).of(113.6)
 	end
 
 	it "Costs £55.60 for a random array of books" do
-    	expect(HarryPotterBooks.new([2,2,2,2,1]).best_deal).to be_within(0.005).of(55.6)
+    	expect(HarryPotterBooks.new([2,2,2,2,1]).price).to be_within(0.005).of(55.6)
 	end
 
 	it "Costs £141.20 for an example off the internet" do
-    	expect(HarryPotterBooks.new([5, 5, 4, 5, 4]).best_deal).to eq(141.2)
+    	expect(HarryPotterBooks.new([5, 5, 4, 5, 4]).price).to eq(141.2)
 	end
 
 
